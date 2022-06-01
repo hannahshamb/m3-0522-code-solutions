@@ -6,8 +6,7 @@ class StopWatch extends React.Component {
     this.pausePlay = this.pausePlay.bind(this);
     this.state = {
       counter: 0,
-      intervalId: 0,
-      isPlaying: false
+      intervalId: 0
     };
   }
 
@@ -15,7 +14,6 @@ class StopWatch extends React.Component {
     if (this.state.intervalId) {
       clearInterval(this.state.intervalId);
       this.setState({ intervalId: 0 });
-      this.setState({ isPlaying: !this.state.isPlaying });
       return;
     }
 
@@ -24,12 +22,10 @@ class StopWatch extends React.Component {
       this.setState({ counter: this.state.counter + 1 });
     }, 1000);
     this.setState({ intervalId: newIntervalId });
-    this.setState({ isPlaying: !this.state.isPlaying });
-
   }
 
   render() {
-    const isPlaying = this.state.isPlaying;
+    const isPlaying = this.state.intervalId;
     const counter = this.state.counter;
 
     return (
