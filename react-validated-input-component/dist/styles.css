@@ -1,0 +1,40 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  padding: 1rem;
+}
+
+input {
+  margin-top: 0.5em;
+  border: solid black  2px;
+}
+
+label {
+  font-size: larger;
+}
+
+p {
+  margin: 0.25rem 0;
+  color: rgb(207 42 40);
+}
+
+.fa-solid {
+  margin-left: 1rem;
+}
+
+.fa-xmark {
+  color: rgb(207 42 40);
+}
+
+.fa-check {
+  color: rgb(107 168 80);
+}
+
+.hidden {
+  display: none;
+}
