@@ -78,11 +78,11 @@ app.post('/api/auth/sign-in', (req, res, next) => {
           }
         })
         .catch(err => {
-          console.error(err);
+          next(err);
         });
     })
     .catch(err => {
-      console.error(err);
+      next(err);
     });
 
   /**
