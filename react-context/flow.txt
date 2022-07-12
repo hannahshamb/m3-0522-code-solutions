@@ -1,0 +1,102 @@
+Starting in ../client/index.jsx, the App React component is being mounted to the DOM.
+
+1. User can sign up.
+In ../client/app.jsx, the App React component's this.state.route is 'sign-up'
+so when the render method is called, renderPage method is called and the Auth component
+is returned. The user, route, and handleSignin props are passed down via context.
+
+Next, the render method of the Auth component is called, and since the route value is 'sign-up',
+the 'Create an account to get started!' is the welcome paragraph that is visible to the user.
+Inside one of the returned div elements, the AuthForm React component is called.
+
+In the AuthForm React component, as the user types a username and password into
+the provided fields to sign up, the onChange event listener is triggered
+which calls the handleChange method that updates the username and password properties
+of the this.state to the new values based on what the user is typing.
+
+When the user hits the "Register" button, the handleSubmit method is called, which
+in this case is the "sign-up" since it is the value in route) and an API POST request
+is made to the server using the provided username and password from this.state.
+
+Once the request is made, on the server side (in ../server/index.js), the corresponding
+post method on the app will be called with the appropriate path containing 'sign-up').
+The username and password are pulled from the request body (if none were included,
+the user receives and error message that says 'username and password are required fields').
+Argon2 hash method is used to hash the provided password from the request body and then a database
+query is made so that the hashed password and username from the request body are
+inserted into the users table of the reactContext database, which automatically will
+asign a corresponding timestamp for when the db was queried and id number for the entry.
+
+Once that is done, (back to../components/auth-form.jsx), the value of the hash location
+is changed on the window to 'sign-in', which triggers the hashchange event listener in the
+App React Component which updates this.state.route to the new location (sign-in) and then
+calls the render method of the App React Component again, which calls the renderPage method again,
+which calls the Auth Component render method again, which updates the welcome message
+paragraph text to 'Please sign in to continue' since the route.path value is now 'sign-in'since it was
+passed down via context and the AuthForm Component render method is called again, which
+changes the alternateActionHref, alternatActionText, and submitButtonText to 'sign-in' based on
+that same action props (route.path).
+As the components talk to each other through the chain, essentially the
+user will see the paragraph welcome message change to say 'Please sign in to continue',
+the link at the bottom will change to 'Register now' and the submit button will
+change at the bottom to say 'Log In.'
+
+
+
+2. User can sign in.
+Similarly to signing up, as the user types a username and password into the provided fields to sign in,
+in the AuthForm React component, the onChange event listener is triggered, which calls the
+handleChange method that updates the username and password properties of the this.state to
+the new values based on what the user is typing.
+
+When the user hits the "Log In" button, the handleSubmit method is called, which
+in this case is the "sign-in" since it is the value in route) and an API POST request
+is made to the server using the provided username and password from this.state.
+
+Once the request is made, on the server side (in ../server/index.js), the corresponding
+post method on the app will be called with the appropriate path containing 'sign-in').
+The username and password are pulled from the request body (if none were included,
+the user receives and error message that says 'username and password are required fields').
+A select query is made to the database to find the corresponding user from the database using
+the username as a search parameter.
+Argon2 verify method is then used on the result from the query to verify if the hashed
+password matches the password provided in the request body and if it does, a token and payload
+are included in the response. From there, the onSignIn function that was passed to AuthForm from
+Auth via props is called with the response as an argument which in turn calls the
+handleSignIn method of the App Component that was passed down via context.
+The handleSignIn method is called, which takes the user information from the argument
+and updates the this.state.user with the new user information and stores the token information
+in local storage.
+
+The render function is called again which calls the renderPage method which calls the
+Auth Component. This time, since there is a user, the Redirect React Component is called
+and an empty string is passed as the value of the to props, which in the Redirect component
+then updates the url window location to the # with an empty string.
+The render method on the App component is called again which then calls the renderPage
+method which calls the Home React Component which causes the user to get Rick Rollers
+because it returns a div element containing a RickRoll GIF in the render method that is called.
+
+
+
+3. User can stay signed in (even if they refresh the page).
+The user stays signed in even when the page is refreshed because the hashchange event
+listener of the App component is triggered which gets the user token that was stored from
+local storage if there is one and then calls the render method of the App component once more, which will
+result in the same chain reaction because the user informaiton will still remain stored in this.state,
+which is passed down via context.
+
+
+
+4. User can sign out.
+When the user clicks the Sign Out button in the navbar, the handleSignOut method
+(which was passed via context to the Navbar component) of the App component is called.
+When the method is called, the token is removed from storage and the this.state.user
+value is returned to null.
+
+The render method of the App component is then called, which calls the renderPage
+method which calls the Home Component which checks the this.context.user and since it
+has been updated to null, then calls the Redirect component with the to props value set to 'sign-in',
+which updates the url to the sign in page. The hashChange event listener on the App component is then triggered,
+state is updated, and the render method of the App component is called again, this time calling the
+renderPage method which takes us to Auth component and AuthForm components that render the proper 'sign-in'
+pieces to the page based on the route 'sign-in'.
