@@ -38,8 +38,8 @@ export default class Carousel extends React.Component {
     const circles = urls.map((item, index) => {
       let circle;
       if (item === url) {
-        circle = <i key={index} className="fa-solid fa-circle fa-2xl px-2"></i>;
-      } else circle = <i key={index} className="fa-regular fa-circle fa-2xl px-2"></i>;
+        circle = <i key={index} selection={index} className="fa-solid fa-circle fa-2xl px-2"></i>;
+      } else circle = <i key={index} selection={index} className="fa-regular fa-circle fa-2xl px-2"></i>;
       return circle;
     });
 
@@ -48,11 +48,11 @@ export default class Carousel extends React.Component {
     }, '3000');
 
     return (
-      <div className="container">
-        <div className='row mt-5'>
+      <div className="my-container">
+        <div className='row w-100 mt-5'>
           <div className="col d-flex align-items-center justify-content-center">
             <i className="fa-solid fa-chevron-left fa-2xl"></i>
-            <img className='mx-5 px-4' src={url} alt='pokemon' width="400"></img>
+            <img className='mx-5 img' src={url} alt='pokemon'></img>
             <i className="fa-solid fa-chevron-right fa-2xl"></i>
           </div>
         </div>
