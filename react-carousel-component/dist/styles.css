@@ -10,3 +10,7 @@
   max-height: 400px;
   max-width: 500px;
 }
+
+i:hover {
+  cursor: pointer;
+}
