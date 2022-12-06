@@ -6,5 +6,4 @@ function isEmpty(stack) {
   } else {
     return true;
   }
-
 }
