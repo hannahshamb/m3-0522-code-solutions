@@ -43,7 +43,7 @@ console.log('filter(namesArray, containsD)', filter(namesArray, containsD));
 function filter(array, predicate) {
   const filteredArray = [];
   array.forEach(item => {
-    if (predicate(item) !== undefined) {
+    if (predicate(item)) {
       filteredArray.push(predicate(item));
     }
   });
