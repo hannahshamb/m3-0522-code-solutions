@@ -7,46 +7,40 @@ const arrayLanguages = [
   'Structured Query Language'
 ];
 
+const doubler = item => {
+  return item * 2;
+};
+console.log('map(arrayNumbers, doubled)', map(arrayNumbers, doubler));
+
+const halved = item => {
+  return item * 0.5;
+};
+console.log('map(arrayNumbers, halved)', map(arrayNumbers, halved));
+
+const priceFormat = item => {
+  return `$${Number.parseFloat(item).toFixed(2)}`;
+};
+console.log('map(arrayNumbers, priceFormat)', map(arrayNumbers, priceFormat));
+
+const uppercase = item => {
+  return item.toUpperCase();
+};
+console.log('map(arrayLanguages, uppercase)', map(arrayLanguages, uppercase));
+
+const lowercase = item => {
+  return item.toLowerCase();
+};
+console.log('map(arrayLanguages, lowercase)', map(arrayLanguages, lowercase));
+
+const firstLetter = item => {
+  return item[0];
+};
+console.log('map(arrayLanguages, firstLetter)', map(arrayLanguages, firstLetter));
+
 function map(array, transform) {
   const mappedArray = [];
-  let mappedItem;
-  let multipied;
-
   array.forEach(item => {
-    if (transform.includes('doubled') || transform.includes('halved')) {
-      if (transform.includes('doubled')) {
-        multipied = 2;
-      } else if (transform.includes('halved')) {
-        multipied = 0.5;
-      }
-      mappedItem = item * multipied;
-    }
-
-    if (transform.includes('price format')) {
-      mappedItem = `$${Number.parseFloat(item).toFixed(2)}`;
-    }
-
-    if (transform.includes('uppercase')) {
-      mappedItem = item.toUpperCase();
-    }
-
-    if (transform.includes('lowercase')) {
-      mappedItem = item.toLowerCase();
-    }
-
-    if (transform.includes('first letters')) {
-      mappedItem = item[0];
-    }
-
-    mappedArray.push(mappedItem);
+    mappedArray.push(transform(item));
   });
-
   return mappedArray;
 }
-
-console.log('doubled', map(arrayNumbers, 'doubled'));
-console.log('halved', map(arrayNumbers, 'halved'));
-console.log('price format', map(arrayNumbers, 'price format'));
-console.log('uppercase', map(arrayLanguages, 'uppercase'));
-console.log('lowercase', map(arrayLanguages, 'lowercase'));
-console.log('first letters', map(arrayLanguages, 'first letters'));
