@@ -44,7 +44,7 @@ function filter(array, predicate) {
   const filteredArray = [];
   array.forEach(item => {
     if (predicate(item)) {
-      filteredArray.push(predicate(item));
+      filteredArray.push((item));
     }
   });
   return filteredArray;
