@@ -17,54 +17,54 @@ const traitsArray = [
   { trainer: 'ash' }
 ];
 
+const add = (item, result) => {
+  result += item;
+  return result;
+};
+console.log('reduce(numbersArray, add, 0)', reduce(numbersArray, add));
+
+const multiply = (item, result) => {
+  result *= item;
+  return result;
+};
+console.log('reduce(numbersArray, multiply)', reduce(numbersArray, multiply));
+
+const accountBalance = (item, result) => {
+  if (item.type === 'deposit') {
+    result += item.amount;
+  }
+  if (item.type === 'withdrawal') {
+    result -= item.amount;
+  }
+  return result;
+};
+console.log('reduce(accountArray, accountBalance)', reduce(accountArray, accountBalance));
+
+const compositer = (item, result) => {
+  for (const prop in item) {
+    result[prop] = item[prop];
+  }
+  return result;
+};
+console.log('reduce(traitsArray, compositer)', reduce(traitsArray, compositer));
+
 function reduce(array, reducer, initialValue) {
   let result;
-  if (initialValue !== undefined) {
-    result = initialValue;
-  }
 
-  if (reducer === 'sum' || reducer === 'product') {
-    if (reducer === 'sum' && initialValue === undefined) {
-      result = 0;
-    } else if (reducer === 'product' && initialValue === undefined) {
-      result = 1;
-    }
-    array.forEach((item, index) => {
-      if (reducer === 'sum') {
-        result += item;
-      } else {
-        result *= item;
-      }
-    });
+  if (initialValue === undefined) {
+    if (array[0].amount === undefined) {
+      initialValue = array[0];
+    } else initialValue = array[0].amount;
   }
+  result = initialValue;
 
-  if (reducer === 'balance') {
-    if (initialValue === undefined) {
-      result = 0;
-    }
-    array.forEach(item => {
-      if (item.type === 'deposit') {
-        result += item.amount;
+  array.forEach((item, index) => {
+    if (initialValue === array[0] || initialValue === array[0].amount) {
+      if (index > 0) {
+        result = reducer(item, result);
       }
-      if (item.type === 'withdrawal') {
-        result -= item.amount;
-      }
-    });
-  }
+    } else result = reducer(item, result);
 
-  if (reducer === 'composite') {
-    result = {};
-    array.forEach(item => {
-      for (const prop in item) {
-        result[prop] = item[prop];
-      }
-    });
-  }
-
+  });
   return result;
 }
-
-console.log('reduce(numbersArray, sum, 0)', reduce(numbersArray, 'sum', 0));
-console.log('reduce(numbersArray, product)', reduce(numbersArray, 'product'));
-console.log('reduce(accountArray, balance)', reduce(accountArray, 'balance'));
-console.log('reduce(traitsArray, composite)', reduce(traitsArray, 'composite'));
