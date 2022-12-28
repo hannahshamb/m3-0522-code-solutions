@@ -40,9 +40,8 @@ console.log('map(arrayLanguages, firstLetter)', map(arrayLanguages, firstLetter)
 function map(array, transform) {
   const mappedArray = [];
   array.forEach(item => {
-    if (transform(item)) {
-      mappedArray.push(item);
-    }
+    const newItem = transform(item);
+    mappedArray.push(newItem);
   });
   return mappedArray;
 }
